@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSBW Visitas Granada</title>
+    <link href="estilos/style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+  <h2> Nombres: </h2>
+    {% for v in visitas %}
+        <li>{{ v.nombre}}</li>
+    {% endfor %}
+  <h2> Imagenes: </h2>
+    {% for v in visitas %}
+    <li>
+        <a href="/visitas_granada/{{ v.nombre }}/">{{ visita.nombre }}
+            <img src="{{ MEDIA_URL }}{{ v.foto }}" width="800" height="600">
+        </a>
+    </li>
+    {% endfor %}
+
+</body>
+</html>
