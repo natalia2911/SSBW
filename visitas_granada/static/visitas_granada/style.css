@@ -1,0 +1,8 @@
+body {
+	background-color: #E6F0FF;
+}
+
+.nav-link:hover{
+	transform: scale(1.05);
+}
+
