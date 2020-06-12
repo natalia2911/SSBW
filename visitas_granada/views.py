@@ -8,6 +8,10 @@ def index(request):
     visitas = Visita.objects.all()
     comentarios = Comentario.objects.all()
     context = {'visitas': visitas, 'comentarios': comentarios}
-    #context = {'visitas': visitas, 'total': str(len(visitas))}
     return render(request, 'base.html', context)
 
+def card(request):
+    visitas = Visita.objects.all()
+    comentarios = Comentario.objects.all()
+    context = {'visitas': visitas, 'comentarios': comentarios}
+    return render(request, 'card.html', context)
