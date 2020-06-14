@@ -25,16 +25,36 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+
   </head>
   <body>
-  <header>
-    <h1>Visitas Granada</h1>
+    <header>
+     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+       <a class="navbar-brand">Menú de arriba</a>
+  <div class="header-right">
+    <a class="navbar-brand" type="button" name="noche" id="noche">Noche</a>
+    <a class="navbar-brand" type="button" name="dia" id="dia">Dia</a>
+    <a href="#about">Login</a>
+  </div>
+      </div>
+     </nav>
 
-  <h2> Nombres: </h2>
+     <nav class="navbar navbar-light" style="background-color: #E9EDF4;">
+      <div class="container">
+       <span class="navbar-text text-dark">
+        <h1>Visitas en Granada</h1>
+       </span>
+      </div>
+     </nav>
+    </header>
+
+
+<!--  <h2> Nombres: </h2>
     {% for v in visitas %}
         <li>{{ v.nombre}}</li>
-    {% endfor %}
-  <h2> Imagenes: </h2>
+    {% endfor %} 
+-->
     {% for v in visitas %}
     <li>
         <a href="/visitas_granada/{{ v.nombre }}/">{{ visita.nombre }}
@@ -44,7 +64,7 @@
     {% endfor %}
 
 <li type="button" class="btn btn-default btn-lg btn-block" style="height: 10%;"><a href="{% url 'card' %}">card</a></li>
-  <header>
+
 	 {% block content %}
 	
 	{% endblock %}
@@ -64,6 +84,30 @@
 	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
 	  </li>
 	</ul>
+
+   <!-- prueba buttons -->
+	  <script>
+    $(document).ready(function(){
+      $("#noche").click(function () {
+         $("body > div").css("background-color", "blue");
+         $("li").css("background-color", "black");
+         $("header > nav").css("background-color", ' black');
+ 	 $("span").css("color", 'white ');
+         $("container-fluid").css("background-color", "black");
+         $("a").css("color", "white");
+      });
+      $("#dia").click(function () {
+         $("body > div").css("background-color", 'grey  ');
+         $("li").css("background-color", ' transparent');
+         $("header > nav").css("background-color", ' #E9EDF4');
+         $("a").css("color", 'white ');
+	 $("span").css("color", 'black ');
+         $("footer > div").css( "background-color"," blue ");
+      });
+    });
+
+  </script>
+
 
   </body>
 </html>
