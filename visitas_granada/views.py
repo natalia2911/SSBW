@@ -15,3 +15,24 @@ def card(request):
     comentarios = Comentario.objects.all()
     context = {'visitas': visitas, 'comentarios': comentarios}
     return render(request, 'card.html', context)
+
+def añadir_visita(request):
+    form = VisitaForm()
+			
+    if request.method == 'POST':   # de vuelta con los datos
+
+        form = VisitaForm(request.POST, request.FILES) #  bound the form
+
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+			
+        context = {
+            'form': form
+        }
+    # GET o error	
+    return render(request, "añadir_visita.html", context)
+
+def editar_visita(request, id):
+    visita = Visita.objects.get(pk=id)
+    form = VisitaForm(instance=visita)
