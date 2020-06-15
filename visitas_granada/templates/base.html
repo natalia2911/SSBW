@@ -35,7 +35,12 @@
   <div class="header-right">
     <a class="navbar-brand" type="button" name="noche" id="noche">Noche</a>
     <a class="navbar-brand" type="button" name="dia" id="dia">Dia</a>
-    <a href="#about">Login</a>
+     {% if user %}
+	<a class="navbar-brand">Bienvenido {{user}}</a>
+	<li class="navbar-brand" type="button"><a href="{% url 'logout' %}">Logout</a></li>
+     {% else %}
+	<li class="navbar-brand" type="button" style="height: 10%;"><a href="{% url 'login' %}">Login</a></li>
+     {% endif %}
   </div>
       </div>
      </nav>
@@ -49,26 +54,18 @@
      </nav>
     </header>
 
-
-<!--  <h2> Nombres: </h2>
-    {% for v in visitas %}
-        <li>{{ v.nombre}}</li>
-    {% endfor %} 
--->
-    {% for v in visitas %}
-    <li>
-        <a href="/visitas_granada/{{ v.nombre }}/">{{ visita.nombre }}
-            <img src="{{ MEDIA_URL }}{{ v.foto }}" width="800" height="600">
-        </a>
-    </li>
-    {% endfor %}
-
-<li type="button" class="btn btn-default btn-lg btn-block" style="height: 10%;"><a href="{% url 'card' %}">card</a></li>
-
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6" style="background-color:yellow;">
+      <p>Aqui habrá un menú lateral</p>
+    </div>
+    <div class="col-sm-6">    
 	 {% block content %}
 	
 	{% endblock %}
-
+    </div>
+  </div>
+</div>
 	<!-- nav -->
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
