@@ -30,17 +30,24 @@
   <body>
     <header>
      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
+      <div class="container" style="margin: 0;">
+    <div class="header-left">
        <a class="navbar-brand">Menú de arriba</a>
+       <a class="navbar-brand text-secondary" style=""><small>Añadir Visita</small></a>
+    </div>
   <div class="header-right">
     <a class="navbar-brand" type="button" name="noche" id="noche">Noche</a>
     <a class="navbar-brand" type="button" name="dia" id="dia">Dia</a>
-     {% if user %}
-	<a class="navbar-brand">Bienvenido {{user}}</a>
-	<li class="navbar-brand" type="button"><a href="{% url 'logout' %}">Logout</a></li>
-     {% else %}
+
+     {% if user.is_anonymous %}
 	<li class="navbar-brand" type="button" style="height: 10%;"><a href="{% url 'login' %}">Login</a></li>
+     {% else %}
+	<a class="navbar-brand"><small>Bienvenido {{user}}</small></a>
+<li class="navbar-brand" type="button"><a href="{% url 'logout' %}">Logout</a></li>
+
      {% endif %}
+
+
   </div>
       </div>
      </nav>

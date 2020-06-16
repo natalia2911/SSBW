@@ -18,9 +18,8 @@
     {% for v in visitas %}
 	<div class="card mb-3" style="max-width: 100%;">
 	  <div class="row no-gutters">
-	      <img src="{{ MEDIA_URL }}{{ v.foto }}" class="card-img rounded-circle" alt="...">
-<li type="button" class="btn btn-primary btn-lg btn-block "><a href="{% url 'detalle' %}" style="color:#F9F9FB;">detalle</a></li>
-<!--	    <div class="col-md-4">
+
+	    <div class="col-md-4">
 	      <img src="{{ MEDIA_URL }}{{ v.foto }}" class="card-img" alt="...">
 	    </div>
 	    <div class="col-md-8">
@@ -29,7 +28,7 @@
 		<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
 		<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 	      </div>
-	    </div> -->
+	    </div>
 	  </div>
 	</div>
    {% endfor %}
