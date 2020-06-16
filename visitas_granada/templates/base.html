@@ -32,8 +32,8 @@
      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
       <div class="container" style="margin: 0;">
     <div class="header-left">
-       <a class="navbar-brand">Menú de arriba</a>
-       <a class="navbar-brand text-secondary" style=""><small>Añadir Visita</small></a>
+       <a class="navbar-brand" type="button" href="{% url 'card' %}">Menú de arriba</a>
+       <a class="navbar-brand text-secondary" type="button" href="{% url 'añadir_visita' %}"><small>Añadir Visita</small></a>
     </div>
   <div class="header-right">
     <a class="navbar-brand" type="button" name="noche" id="noche">Noche</a>

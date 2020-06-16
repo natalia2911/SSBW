@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+	<section>
+	<form action="{% url 'añadir_visita' %}" method="post">
+      {% csrf_token %} 
+      {{ form }}
+      <input type="submit" class="btn btn-primary btn-lg btn-block " value="Añade nueva visita"/>
+    </form>
+	</section>
+{% endblock %}
