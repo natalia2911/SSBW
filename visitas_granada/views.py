@@ -6,7 +6,20 @@ from .models import Visita, Comentario, VisitaForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect, JsonResponse
+from django.template import loader
+from django.contrib import messages
 
+from rest_framework import viewsets, permissions
+from rest_framework.parsers import JSONParser
+from .serializers import VisitaSerializer, ComentarioSerializer, LikeSerializer
+
+from django.core.exceptions import ValidationError
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+
+from rest_framework import status
+from rest_framework import viewsets
+from rest_framework.decorators import detail_route, list_route
 
 def index(request):
     visitas = Visita.objects.all()
@@ -61,6 +74,16 @@ def borrar_visita(request, name):
     visita = Visita.objects.get(nombre=name)
     visita.delete()
     return redirect(index)
+
+class VisitaViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Visita.objects.all()#.order_by('nombre')
+    serializer_class = VisitaSerializer
+
+class ComentarioViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Comentario.objects.all()
+    serializer_class = ComentarioSerializer
 
 @csrf_exempt
 def visita_likes(request, name):
