@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!--    {% for v in visitas %}
+    <li>
+        <a href="/visitas_granada/{{ v.nombre }}/">{{ visita.nombre }}
+            <img src="{{ MEDIA_URL }}{{ v.foto }}" width="800" height="600">
+        </a>
+    </li>
+    {% endfor %}
+
+<li type="button" class="btn btn-default btn-lg btn-block" style="height: 10%;"><a href="{% url 'card' %}">card</a></li>
+
+-->
+    {% for v in visitas %}
+	<div class="card mb-3" style="max-width: 100%;">
+	  <div class="row no-gutters">
+
+	    <div class="col-md-4">
+	      <img src="{{ MEDIA_URL }}{{ v.foto }}" class="card-img" alt="...">
+	    </div>
+	    <div class="col-md-8">
+	      <div class="card-body">
+		<h5 class="card-title">{{ v.nombre}}</h5>
+		<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+		<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+   {% endfor %}
+
+{% endblock %}

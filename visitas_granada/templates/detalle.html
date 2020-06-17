@@ -15,22 +15,104 @@
 <li type="button" class="btn btn-default btn-lg btn-block" style="height: 10%;"><a href="{% url 'card' %}">card</a></li>
 
 -->
-    {% for v in visitas %}
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<div class="card mb-3" style="max-width: 100%;">
 	  <div class="row no-gutters">
 
-	    <div class="col-md-4">
-	      <img src="{{ MEDIA_URL }}{{ v.foto }}" class="card-img" alt="...">
-	    </div>
 	    <div class="col-md-8">
+	      <img src="{{ MEDIA_URL }}{{ visita.foto }}" class="card-img" alt="...">
+	    </div>
+	    <div class="col-md-2">
 	      <div class="card-body">
-		<h5 class="card-title">{{ v.nombre}}</h5>
-		<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+		<h5 class="card-title">{{ visita.nombre}}</h5>
 	      </div>
 	    </div>
+	    <div class="col-md-2">
+	      <p class="card-text"><small class="text-muted">{{ visita.likes}}</small></p>
+	      <i  id='like' type="button" class="fa fa-thumbs-up"></i>
+              <button id='dislike' type="button" class="fa fa-thumbs-down"><i data-feather="thumbs-down"></i></button>
+	    </div>
 	  </div>
+
+
+	<div class="card" style="max-width: 100%;">
+	  <div class="row no-gutters">
+	      <div class="card-body">
+		<p class="card-text">{{ visita.descripción }}.</p>
+	      </div>
+	  </div>
+
+      <section>
+<div class="row text-right">
+<div class="col-md-8"> 
+	<a href="{% url 'borrar_visita' name=visita.nombre %}"><button type="button" class="btn btn-dark">Borrar</button></a>
+
+</div>
+<div class="col">
+	<a href="{% url 'editar_visita' name=visita.nombre %}"><button type="button" class="btn btn-secondary">Editar</button></a>
+
+</div>
+</div>
+      </section>
+
 	</div>
-   {% endfor %}
+
+	</div>
+
+<script text="text/javascript">
+  // Obtener los likes actuales:
+  var likes = "{{ visita.likes }}";
+  likes = Number(likes);
+  var likeout = document.getElementById('likesoutput');
+  likeout.innerHTML = likes;
+
+  // Para actualizar en la base de datos el valor de los likes:
+  function SendValue(value) {
+      $.ajax({
+          'url': "{% url 'likes' visita.nombre %}",
+          'type': 'PUT',
+          'dataType': 'json',
+          'data': JSON.stringify({'likes': value}),
+          'success': function (data)  {
+              likes = Number(data.likes);
+          }
+      })
+  }
+
+  // JQuery:
+  $(document).ready(function() {
+      // Like:
+      $("#like").click(function() {
+          likes += 1;
+          likeout.innerHTML = likes;
+          SendValue(likes)
+      });
+
+      // Dislike
+      $("#dislike").click(function() {
+          likes -= 1;
+          if(likes < 0) { likes = 0; }
+          likeout.innerHTML = likes;
+          SendValue(likes)
+      });
+  });
+</script>
 
 {% endblock %}
+
+<!--
+   {% if user.is_staff %}
+      <p class="text-danger h3"> NO es propietario, identifiquese para poder seguir </p>
+   {% else %}
+      <section>
+	<form action="{% url 'añadir_visita' %}" method="post">
+         {% csrf_token %} 
+         {{ form }}
+        <input type="submit" class="btn btn-primary btn-lg btn-block " value="borrar"/>
+        <input type="submit" class="btn btn-primary btn-lg btn-block " value="editar"/>
+        </form>
+      </section>
+   {% endif %}
+-->

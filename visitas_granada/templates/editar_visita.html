@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+   {% if user.is_anonymous %}
+      <p class="text-danger h3"> NO está registrado, identifiquese para poder seguir </p>
+   {% else %}
+	<form action="{% url 'editar_visita' name=nombre %}" method="post">
+	{% csrf_token %}
+        {{ form }}
+         <input type="submit" class="btn btn-primary btn-lg btn-block " value="Enviar"/>
+        </form>
+   {% endif %}
+{% endblock %}

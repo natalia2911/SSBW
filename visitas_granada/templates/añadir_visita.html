@@ -3,11 +3,16 @@
 
 
 {% block content %}
-	<section>
+   {% if user.is_anonymous %}
+      <p class="text-danger h3"> NO está registrado, identifiquese para poder seguir </p>
+   {% else %}
+      <section>
 	<form action="{% url 'añadir_visita' %}" method="post">
-      {% csrf_token %} 
-      {{ form }}
-      <input type="submit" class="btn btn-primary btn-lg btn-block " value="Añade nueva visita"/>
-    </form>
-	</section>
+         {% csrf_token %} 
+         {{ form }}
+        <input type="submit" class="btn btn-primary btn-lg btn-block " value="Añade nueva visita"/>
+        </form>
+      </section>
+   {% endif %}
+
 {% endblock %}
