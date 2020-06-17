@@ -20,3 +20,7 @@ class VisitaForm(forms.ModelForm):
 			'descripción': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
 			'foto': forms.FileInput()
 		}
+	def clean(self):
+		data = self.cleaned_data
+		if not data["descripcion"][0].isupper():
+			raise ValidationError("El campo descripción tiene que comenzar por mayúscula")
