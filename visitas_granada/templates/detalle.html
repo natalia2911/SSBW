@@ -1,6 +1,4 @@
-
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
 
@@ -30,12 +28,11 @@
 	      </div>
 	    </div>
 	    <div class="col-md-2">
-	      <p class="card-text"><small class="text-muted">{{ visita.likes}}</small></p>
-	      <i  id='like' type="button" class="fa fa-thumbs-up"></i>
-              <button id='dislike' type="button" class="fa fa-thumbs-down"><i data-feather="thumbs-down"></i></button>
+        <label id="likesoutput"></label> 
+	      <i id='like' type="button" class="fa fa-thumbs-up" style="color: chartreuse;"></i>
+        <i id='dislike' type="button" class="fa fa-thumbs-down" style="color: rgb(240, 20, 20);"></i>
 	    </div>
-	  </div>
-
+    </div>
 
 	<div class="card" style="max-width: 100%;">
 	  <div class="row no-gutters">
@@ -59,8 +56,9 @@
 
 	</div>
 
-	</div>
-
+  </div>
+  {% endblock %}
+  {% block scripts_likes %}
 <script text="text/javascript">
   // Obtener los likes actuales:
   var likes = "{{ visita.likes }}";
@@ -99,7 +97,6 @@
       });
   });
 </script>
-
 {% endblock %}
 
 <!--

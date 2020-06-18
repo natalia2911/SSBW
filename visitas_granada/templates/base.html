@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="es">
   <head>
@@ -8,7 +9,6 @@
     <meta name="author" content="Matilde Cabrera González">
 
 <!-- favicon -->
-{% load static %}
 <link rel="shortcut icon" type="image/png" href="{% static 'visitas_granada/favicon.png' %}" />
 
     <!-- Bootstrap CSS -->
@@ -22,6 +22,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="  crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -29,21 +30,34 @@
   </head>
   <body>
     <header>
-     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container" style="margin: 0;">
     <div class="header-left">
        <a class="navbar-brand" type="button" href="{% url 'card' %}">Menú de arriba</a>
        <a class="navbar-brand text-secondary" type="button" href="{% url 'añadir_visita' %}"><small>Añadir Visita</small></a>
     </div>
   <div class="header-right">
-    <a class="navbar-brand" type="button" name="noche" id="noche">Noche</a>
-    <a class="navbar-brand" type="button" name="dia" id="dia">Dia</a>
+<!-- Boton para oscurecer el theme -->
+    <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input" id="darkSwitch">
+      <label class="custom-control-label" for="darkSwitch" style="color: aliceblue;" > <i class="fas fa-moon"></i></label>
+    </div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
      {% if user.is_anonymous %}
-	<li class="navbar-brand" type="button" style="height: 10%;"><a href="{% url 'login' %}">Login</a></li>
+  <form class="navbar-brand form-inline my-2 my-lg-0" action="{% url 'login' %}">
+    <button class="btn btn-outline-success my-2 my-sm-0"
+      type="submit">Login <i class="fas fa-sign-in-alt"></i><i
+      class="feather-24" data-feather="log-in"></i>
+    </button>
+  </form>
      {% else %}
 	<a class="navbar-brand"><small>Bienvenido {{user}}</small></a>
-<li class="navbar-brand" type="button"><a href="{% url 'logout' %}">Logout</a></li>
+  <form class="navbar-brand form-inline my-2 my-lg-0" action="{% url 'logout' %}">
+   <button class="btn btn-outline-danger my-2 my-sm-0"
+    type="submit">Logout <i class="fas fa-sign-out-alt"></i><i
+    class="feather-24" data-feather="log-out"></i>
+   </button>
+  </form>
 
      {% endif %}
 
@@ -56,6 +70,17 @@
       <div class="container">
        <span class="navbar-text text-dark">
         <h1>Visitas en Granada</h1>
+        <p>Tenemos {{n_visitas}} visitas</p>
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
        </span>
       </div>
      </nav>
@@ -90,29 +115,9 @@
 	  </li>
 	</ul>
 
-   <!-- prueba buttons -->
-	  <script>
-    $(document).ready(function(){
-      $("#noche").click(function () {
-         $("body > div").css("background-color", "blue");
-         $("li").css("background-color", "black");
-         $("header > nav").css("background-color", ' black');
- 	 $("span").css("color", 'white ');
-         $("container-fluid").css("background-color", "black");
-         $("a").css("color", "white");
-      });
-      $("#dia").click(function () {
-         $("body > div").css("background-color", 'grey  ');
-         $("li").css("background-color", ' transparent');
-         $("header > nav").css("background-color", ' #E9EDF4');
-         $("a").css("color", 'white ');
-	 $("span").css("color", 'black ');
-         $("footer > div").css( "background-color"," blue ");
-      });
-    });
-
-  </script>
-
-
-  </body>
+<script type="text/javascript" src="{% static 'visitas_granada/scripts.js' %}"></script>
+ 
+{% block scripts_likes %}
+{% endblock %}
+</body>
 </html>

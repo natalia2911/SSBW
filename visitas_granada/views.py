@@ -22,9 +22,9 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route, list_route
 
 def index(request):
-    visitas = Visita.objects.all()
-    comentarios = Comentario.objects.all()
-    context = {'visitas': visitas, 'comentarios': comentarios}
+    latest_visita_list = list(Visita.objects.order_by('-likes')[:])
+    numero_visitas = Visita.objects.count()
+    context = {'visitas': latest_visita_list, 'n_visitas': numero_visitas}
     return render(request, 'card.html', context)
 
 def detalle(request, name):
@@ -86,7 +86,7 @@ class ComentarioViewSet(viewsets.ModelViewSet):
     serializer_class = ComentarioSerializer
 
 @csrf_exempt
-def visita_likes(request, name):
+def api_likes(request, name):
     try:
         visita = Visita.objects.get(nombre=name)
     except Visita.DoesNotExist:

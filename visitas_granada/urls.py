@@ -16,6 +16,6 @@ urlpatterns = [
     path('añadir_visita/', views.añadir_visita, name='añadir_visita'),
     path('editar_visita/<str:name>', views.editar_visita, name='editar_visita'),
     path('borrar_visita/<str:name>', views.borrar_visita, name='borrar_visita'),
-    path('likes/<str:name>', views.visita_likes, name='likes'),
+    path('api/likes/<str:name>', views.api_likes, name='likes'),
     path('api/', include(router.urls)),
 ]

@@ -1,8 +1,38 @@
 
 .navbar-text{
-  padding-top:60px;
-  padding-bottom:30px;
-  margin-top:30px;
-  margin-bottom:30px;
+  padding-top:10px;
+  padding-bottom:10px;
+  margin-top:10px;
+  margin-bottom:10px;
 }
 
+.custom-control-label {
+  position: relative;
+  margin-bottom: 0;
+  vertical-align: bottom;
+}
+
+[data-theme="dark"] {
+  background-color: #111 !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .bg-light {
+  background-color: #333 !important;
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: #000 !important;
+}
+
+[data-theme="dark"] .bg-black {
+  background-color: #eee !important;
+}
+
+[data-theme="dark"] .jumbotron {
+  background-color: #333 !important;
+}
+
+[data-theme="dark"] .card-body {
+  background-color: #333 !important;
+}
