@@ -3,3 +3,4 @@ psycopg2>=2.7,<3.0
 django-crispy-forms==1.9.0
 djangorestframework==3.9.0
 djangorestframework_simplejwt==4.1.4
+requests

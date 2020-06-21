@@ -1,25 +1,31 @@
     #latest_visita_list = list(Visita.objects.order_by('likes')[:3])
     #template = loader.get_template('visitas_granada/index.html')
     #context = {'visita': latest_visita_list,'test': "test888"}
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .models import Visita, Comentario, VisitaForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django import forms
 
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
 from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+from rest_framework.decorators import detail_route, list_route
+
 from .serializers import VisitaSerializer, ComentarioSerializer, LikeSerializer
 
-from django.core.exceptions import ValidationError
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+import requests
+import json
 
-from rest_framework import status
-from rest_framework import viewsets
-from rest_framework.decorators import detail_route, list_route
+import os
+import datetime
+
+import logging
+logger = logging.getLogger(__name__)
 
 def index(request):
     latest_visita_list = list(Visita.objects.order_by('-likes')[:])
@@ -30,8 +36,21 @@ def index(request):
 def detalle(request, name):
     visita = Visita.objects.get(nombre=name)
     comentarios = Comentario.objects.all()
-    context = {'visita': visita, 'comentarios': comentarios}
+    numero_visitas = Visita.objects.count()
+
+    site = visita.nombre.replace(" ", "+") + "+Granada"
+    uri = 'https://nominatim.openstreetmap.org/search?q={}&format=json'.format(site)
+    result = requests.get(uri)
+    data = json.loads(result.text)
+    lat = data[0]['lat']
+    lon = data[0]['lon']
+    print(data)
+    print(lat)
+    print(lon)
+
+    context = {'visita': visita, 'comentarios': comentarios, 'n_visitas': numero_visitas, 'lat': lat, 'lon': lon}
     return render(request, 'detalle.html', context)
+
 
 def añadir_visita(request):
     			
@@ -47,7 +66,9 @@ def añadir_visita(request):
     else:
         form = VisitaForm()
     # GET o error	
-    return render(request, "añadir_visita.html", {'form': form})
+    numero_visitas = Visita.objects.count()
+    context = {'form': form, 'n_visitas': numero_visitas}
+    return render(request, "añadir_visita.html", context)
 
 def editar_visita(request, name):
     visita = Visita.objects.get(nombre=name)

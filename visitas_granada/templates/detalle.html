@@ -1,63 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<!--    {% for v in visitas %}
-    <li>
-        <a href="/visitas_granada/{{ v.nombre }}/">{{ visita.nombre }}
-            <img src="{{ MEDIA_URL }}{{ v.foto }}" width="800" height="600">
-        </a>
-    </li>
-    {% endfor %}
-
-<li type="button" class="btn btn-default btn-lg btn-block" style="height: 10%;"><a href="{% url 'card' %}">card</a></li>
-
--->
-<!-- Add icon library -->
+<!-- Add icon library para like and dislike-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<div class="card mb-3" style="max-width: 100%;">
+    <h5>Ubicación</h5>
+    <div class="card mb-3" style="max-width: 100%;height: 50%;" id="mapid"></div>
+
+	<div class="card mb-3" >
 	  <div class="row no-gutters">
 
 	    <div class="col-md-8">
 	      <img src="{{ MEDIA_URL }}{{ visita.foto }}" class="card-img" alt="...">
 	    </div>
-	    <div class="col-md-2">
-	      <div class="card-body">
+	    <div class="col-md-4">
+	      <div class="card-body text-center">
+
+        <label id="likesoutput"></label> 
+	<i id='like' type="button" class="fa fa-thumbs-up" style="color: chartreuse;"></i>
+        <i id='dislike' type="button" class="fa fa-thumbs-down" style="color: rgb(240, 20, 20);"></i>
+
 		<h5 class="card-title">{{ visita.nombre}}</h5>
 	      </div>
-	    </div>
-	    <div class="col-md-2">
-        <label id="likesoutput"></label> 
-	      <i id='like' type="button" class="fa fa-thumbs-up" style="color: chartreuse;"></i>
-        <i id='dislike' type="button" class="fa fa-thumbs-down" style="color: rgb(240, 20, 20);"></i>
 	    </div>
     </div>
 
 	<div class="card" style="max-width: 100%;">
-	  <div class="row no-gutters">
 	      <div class="card-body">
 		<p class="card-text">{{ visita.descripción }}.</p>
 	      </div>
-	  </div>
 
       <section>
-<div class="row text-right">
-<div class="col-md-8"> 
+      <div class="row float-right">
 	<a href="{% url 'borrar_visita' name=visita.nombre %}"><button type="button" class="btn btn-dark">Borrar</button></a>
-
-</div>
-<div class="col">
 	<a href="{% url 'editar_visita' name=visita.nombre %}"><button type="button" class="btn btn-secondary">Editar</button></a>
-
-</div>
-</div>
+      </div>
       </section>
-
 	</div>
-
   </div>
   {% endblock %}
+
   {% block scripts_likes %}
 <script text="text/javascript">
   // Obtener los likes actuales:
@@ -97,19 +79,49 @@
       });
   });
 </script>
+
+<script text="text/javascript">
+    var lat = "{{lat}}";
+    var lon = "{{lon}}";
+
+    var map = L.map('mapid').setView([lat, lon], 16);
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 16
+    }).addTo(map);
+
+    L.control.scale().addTo(map);
+    L.marker([lat, lon]).addTo(map);
+</script>
+
 {% endblock %}
 
-<!--
-   {% if user.is_staff %}
-      <p class="text-danger h3"> NO es propietario, identifiquese para poder seguir </p>
-   {% else %}
-      <section>
-	<form action="{% url 'añadir_visita' %}" method="post">
-         {% csrf_token %} 
-         {{ form }}
-        <input type="submit" class="btn btn-primary btn-lg btn-block " value="borrar"/>
-        <input type="submit" class="btn btn-primary btn-lg btn-block " value="editar"/>
-        </form>
-      </section>
-   {% endif %}
+<!-- mapa con clave, llamada javascript, no funciona bien por no tener activada la facturación -->
+<!-- https://developers.google.com/maps/documentation/javascript/tutorial
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=MYAPYKEY&callback=initMap">
+</script>
+
+  <div id="map"></div>
+
+<script text="text/javascript">
+    var lati = "{{lat}}";
+    var long = "{{lon}}";
+
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: Number(lati), lng: Number(long) },
+    zoom: 30
+  });
+}
+</script>
+-->
+<!-- mapa embed, https://www.uup.es/google-maps-gratis-en-tu-web/  -->
+<!-- https://www.html6.es/ex21.html
+<section>
+<iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d12712.993178250823!2d-3.6065946999999996!3d37.19433155!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1543943904167" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</section>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 -->

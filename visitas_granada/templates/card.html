@@ -5,7 +5,7 @@
 {% block content %}
 
     {% for v in visitas %}
-	<div class="card mb-3" style="max-width: 100%;">
+	<div class="card mb-3" style="max-width: 500px;">
 	  <div class="row no-gutters">
 	      <img src="{{ MEDIA_URL }}{{ v.foto }}" class="card-img rounded-circle" alt="...">
 <li type="button" class="btn btn-primary btn-lg btn-block "><a href="{% url 'detalle' name=v.nombre %}" style="color:#F9F9FB;">detalle</a></li>
