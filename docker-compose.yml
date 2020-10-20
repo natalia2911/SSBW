@@ -1,4 +1,4 @@
-version: '3'
+version: '3' #Versión 3 de python
 
 services:
   web:
